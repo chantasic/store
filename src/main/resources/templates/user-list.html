@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <title>User List</title>
+  <link rel="stylesheet" type="text/css" href="/css/styles.css">
+
+</head>
+<body>
+<h1>All Users</h1>
+<nav>
+  <a href="/users/new">Create New User</a>
+</nav>
+
+<!-- Search User Form -->
+<form th:action="@{/users/find}" method="get">
+  <label>Search by Name:</label>
+  <input type="text" name="name" />
+  <button type="submit">Search</button>
+</form>
+
+<table>
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th>City</th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="user : ${users}">
+    <td th:text="${user.id}"></td>
+    <td th:text="${user.name}"></td>
+    <td th:text="${user.email}"></td>
+    <td th:text="${user.city}"></td>
+    <td>
+      <form th:action="@{/users/update}" method="get" style="display:inline;">
+        <input type="hidden" name="id" th:value="${user.id}" />
+        <button type="submit">Edit</button>
+      </form>
+      <form th:action="@{/users/delete}" method="post" style="display:inline;">
+        <input type="hidden" name="id" th:value="${user.id}" />
+        <button type="submit">Delete</button>
+      </form>
+    </td>
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>
